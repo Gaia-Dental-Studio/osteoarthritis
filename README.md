@@ -1,7 +1,7 @@
 # Osteoarthritis
 
 This model was fine-tuned from ResNet18 with [The Knee Osteoarthritis Dataset](https://www.kaggle.com/datasets/shashwatwork/knee-osteoarthritis-dataset-with-severity/data) using Pytorch in 25 epochs, Adam optimizer, and a learning rate 0.001. The training accuracy is 94.41% while the evaluation with test set accuracy is 57%.
-
+```
 Classification Report:
               precision    recall  f1-score   support
 
@@ -14,3 +14,4 @@ Classification Report:
     accuracy                           0.57      1656
    macro avg       0.64      0.61      0.61      1656
 weighted avg       0.64      0.57      0.59      1656
+```
