@@ -23,7 +23,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = models.resnet18()
 num_ftrs = model.fc.in_features
 model.fc = torch.nn.Linear(num_ftrs, len(classes))
-model.load_state_dict(torch.load('osteoarthritis_resnet18-model.pth', map_location=device))
+model.load_state_dict(torch.load('/Users/mauliana/Documents/Work/GAIA/code/knee_osteoarthritis/ostreoarthritis_model_gpu.pth', map_location=device))
 model = model.to(device)
 model.eval()
 
@@ -55,12 +55,14 @@ def predict():
             confidence, predicted_idx = torch.max(probabilities, 1)
             predicted_class = classes[predicted_idx.item()]
             class_confidences = {classes[i]: float(probabilities[0][i].item()) * 100 for i in range(len(classes))}
+            sorted_confidences = dict(sorted(class_confidences.items(), key=lambda item: item[1], reverse=True))
+            top_3_confidences = dict(list(sorted_confidences.items())[:3])
 
             # Prepare the response
             result = {
                 'predicted_class': predicted_class,
                 'confidence': confidence.item() * 100,
-                'class_confidences': class_confidences
+                'class_confidences': top_3_confidences
             }
         
         os.remove(image_path)
